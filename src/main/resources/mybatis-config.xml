@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="dbConfig.properties"/>
+    <!--    <settings>-->
+    <!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
+    <!--    </settings>-->
+    <!--    别名处理器  可以为我的java类型取别名]
+            type默认为类名小写
+            Package批量取别名 name:指定包名 默认也为类名的小写
+    -->
+    <!--    <typeAliases>-->
+    <!--        <typeAlias type="com.mybatis2.entity.TblEmployee" alias="Emp"/>-->
+    <!--        <package name="com.mybatis2.entity"/>-->
+    <!--    </typeAliases>-->
+
+    <!-- 4.environments 环境们 可以配置多种环境
+       <environment id="development"> 开发环境 测试环境等等
+        <transactionManager type="JDBC"/> 必须要有
+                            MANAGED 事务管理器的类型 两种
+                            使用的spring即可 （声明式事务）
+         <dataSource type="POOLED">   必须要有
+                           UNPOOLED||JNDI 三种连接池方式 默认是连接池
+                           都会用spring的方式来使用数据源
+         </environment>
+         <environments default="development"> 指定默认的环境
+
+       -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.DriverClass}"/>
+                <property name="url" value="${jdbc.jdbcUrl}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--
+
+         <databaseIdProvider type="DB_VENDOR">
+            <property name="Mysql" value="mysql"/>
+              <property name="Oracle" value="oracle"/>
+        </databaseIdProvider>
+    支持多个数据库
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mybatis2.entity.TblDepExample"
+     databaseId="mysql"> 指明执行这条语句时使用mysql数据库
+     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mybatis2.entity.TblDepExample"
+     databaseId="oracle"> 指明执行这条语句时使用Oracle数据库
+
+    <mappers>
+            <mapper resource="TblDepMapper.xml"/> 引用类路径的资源
+            <url>
+            <mapper class=""/> 引用接口
+            1.XML文件要和mapper接口放在一起
+            2.没有SQL映射文件，基于注解
+            <package name=""/>
+            批量注册 但是配置文件还和接口在统一包下
+        </mappers>
+
+    -->
+
+
+    <mappers>
+        <mapper resource="TblDepMapper.xml"/>
+        <mapper resource="TblEmployeeMapper.xml"/>
+        <mapper class="com.mybatis2.dao.TblEmployeeMapperAnnotation"/>
+
+    </mappers>
+
+</configuration>

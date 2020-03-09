@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis2.dao.TblEmployeeMapper">
+
+
+    <!--
+       TBlEmployee 的增删改查
+       -->
+    <!--可以自定义map 但是单独写的话是resultType 不要写成Map    -->
+
+
+    <select id="selectEmpById" resultType="com.mybatis2.entity.TblEmployee">
+        select *
+        from tbl_employee
+        where id = #{id}
+    </select>
+    <!--mysql支持自增主键，自增主键的获取 mybatis也是利用statement.getGenreatedKeys()
+        useGeneratedKeys="true" 使用自增主键策略
+        keyProperty=""+指定对应的主键属性
+
+    -->
+    <insert id="addEmp" parameterType="com.mybatis2.entity.TblEmployee" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_employee(last_name, gender, email)
+        VALUES (#{lastName}, #{gender}, #{email})
+    </insert>
+    <update id="updateEmp">
+        update tbl_employee
+        set last_name = #{lastName},
+            email=#{email},
+            gender=#{gender}
+        where id = #{id}
+    </update>
+    <delete id="deleteEmpById">
+        delete
+        from tbl_employee
+        where id = #{id}
+    </delete>
+</mapper>
